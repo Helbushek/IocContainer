@@ -3,10 +3,17 @@
 #include <memory>
 #include <map>
 #include <string>
-using namespace std;
+// using namespace std;  !!!! s
 
 class IOCContainer
 {
+    //Создание typeid для типа
+    /*
+     * В предлагаемой реализации контейнера IOC  есть статическая целочисленная переменная,
+     * указывающая идентификатор следующего типа, который будет выделен,
+     * и экземпляр статической локальной переменной для каждого типа,
+     * доступ к которому можно получить, вызвав метод GetTypeID.
+     */
 	static int s_nextTypeId;
 	template<typename T>
 	static int GetTypeID() {
@@ -15,14 +22,6 @@ class IOCContainer
 	}
 
 public:
-	//Создание typeid для типа
-	/*
-	 * В предлагаемой реализации контейнера IOC  есть статическая целочисленная переменная,
-	 * указывающая идентификатор следующего типа, который будет выделен,
-	 * и экземпляр статической локальной переменной для каждого типа,
-	 * доступ к которому можно получить, вызвав метод GetTypeID.
-	*/
-
 	/*
 	 * Получение экземпляров объекта
 	 * Теперь, когда у нас есть идентификатор типа,
@@ -60,7 +59,7 @@ public:
 		std::shared_ptr<T> GetObject() {
 			return m_functor();
 		}
-	};
+    }; // CFactory
 
 	template<typename T>
 	std::shared_ptr<T> GetObject() {
@@ -68,7 +67,7 @@ public:
 		auto factoryBase = m_factories[typeId];
 		auto factory = std::static_pointer_cast<CFactory<T>>(factoryBase);
 		return factory->GetObject();
-	}
+    }
 
 	//Регистрация экземпляров
 
@@ -78,7 +77,7 @@ public:
 		std::function<std::shared_ptr<TInterface>(std::shared_ptr<TS>... ts)> functor) {
 		m_factories[GetTypeID<TInterface>()] = std::make_shared<CFactory<TInterface>>(
 				[ = ] { return functor(GetObject<TS>()...); });
-	}
+    }
 
 	//Регистрация одного экземпляра объекта
 	template<typename TInterface>
@@ -142,15 +141,15 @@ public:
 
 class TheOtherThing : public IAmTheOtherThing
 {
-	std::shared_ptr<IAmAThing> m_thing;
-	string m_superInfo;
+    std::shared_ptr<IAmAThing> m_thing;
+    std::string m_superInfo;
 
 public:
 	TheOtherThing(std::shared_ptr<IAmAThing> thing)
 		: m_thing(thing) {
 		m_superInfo = "From TheOtherThing";
 	}
-	TheOtherThing(std::shared_ptr<IAmAThing> thing, string sInfo)
+    TheOtherThing(std::shared_ptr<IAmAThing> thing, std::string sInfo)
 		: m_thing(thing)
 		, m_superInfo(sInfo) {
 		m_superInfo = sInfo;
