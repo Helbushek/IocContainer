@@ -96,7 +96,7 @@ class AmdProcessor : public IProcessor
     void getComponentInfo() const override
     {
         std::cout << "AMD Processor with specs: "
-                  << "Family: " << processorFamily->getFamily() << " " << getProcessorType() << std::endl;
+                  << "family - " << processorFamily->getFamily() << "; type - " << getProcessorType() << std::endl;
     }
 };
 
@@ -142,7 +142,7 @@ class IntelProcessor : public IProcessor
     void getComponentInfo() const override
     {
         std::cout << "Intel Processor with specs: "
-                  << "Branding: " << processorBranding->getBranding() << " " << getProcessorType() << std::endl;
+                  << "branding - " << processorBranding->getBranding() << "; type - " << getProcessorType() << std::endl;
     }
 };
 
@@ -159,13 +159,13 @@ class IRam : public PcComponent
     IRam(){};
     ~IRam(){};
 
-    IRam(DoubleDateRate ddr) : ddr(ddr)
+    IRam(std::shared_ptr<DoubleDateRate> ddr) : ddr(ddr)
     {
     }
 
     std::string getDdr() const
     {
-        switch (ddr)
+        switch (*ddr)
         {
         case DoubleDateRate::DDR3:
             return "DDR3";
@@ -179,13 +179,13 @@ class IRam : public PcComponent
     }
 
   protected:
-    DoubleDateRate ddr;
+    std::shared_ptr<DoubleDateRate> ddr;
 };
 
 class KingstonRam : public IRam
 {
   public:
-    KingstonRam(DoubleDateRate ddr) : IRam(ddr)
+    KingstonRam(std::shared_ptr<DoubleDateRate> ddr) : IRam(ddr)
     {
     }
 
@@ -198,7 +198,7 @@ class KingstonRam : public IRam
 class ApacerRam : public IRam
 {
   public:
-    ApacerRam(DoubleDateRate ddr) : IRam(ddr)
+    ApacerRam(std::shared_ptr<DoubleDateRate> ddr) : IRam(ddr)
     {
     }
 

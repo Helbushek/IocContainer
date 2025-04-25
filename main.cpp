@@ -31,9 +31,25 @@ int main(int argc, const char *argv[])
 //    helloInstance->hello();
 
 //    gContainer.RegisterInstance<IProcessor, IntelProcessor>();
-    gContainer.RegisterFactory<IProcessor, IntelProcessor, Processor64, I8Branding>();
 
-    gContainer.GetObject<IProcessor>()->getComponentInfo();
+gContainer.RegisterFactory<ProcessorType, Processor64>();
+gContainer.RegisterFactory<ProcessorType, Processor86>();
+
+gContainer.RegisterFactory<ProcessorBranding, I8Branding>();
+gContainer.RegisterFactory<ProcessorFamily, RazorFamily>();
+
+gContainer.RegisterInstance<IRam::DoubleDateRate>(std::make_shared<IRam::DoubleDateRate>(IRam::DDR4));
+
+
+gContainer.RegisterFactory<IProcessor, IntelProcessor, ProcessorType, ProcessorBranding>();
+
+gContainer.RegisterFactory<IProcessor, AmdProcessor, ProcessorType, ProcessorFamily>();
+
+gContainer.RegisterFactory<IRam, KingstonRam, IRam::DoubleDateRate>();
+
+gContainer.RegisterFactory<Computer, Computer, IProcessor, IRam>();
+
+gContainer.GetObject<Computer>()->Specs();
 
     return 0;
 }
