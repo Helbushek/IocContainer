@@ -103,7 +103,7 @@ class IGraphWidget : public QWidget
         setStyle(style);
         style_->configure(this);
         update();
-        repaint();
+        plot_->replot();
     }
 
     QCustomPlot* plot() const { return plot_; }
