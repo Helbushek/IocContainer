@@ -1,4 +1,3 @@
-// src/Chart/Style/IChartStyle.h
 #pragma once
 
 #include <QPainter>

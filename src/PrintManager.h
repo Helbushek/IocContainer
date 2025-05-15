@@ -15,7 +15,7 @@ class PrintManager {
     static bool exportToPdf(QWidget *widget,
                             const QString &filePath,
                             bool grayScale = false,
-                            int dpi       = 300)
+                            int dpi       = 3000)
     {
         if (!widget || filePath.isEmpty())
             return false;

@@ -58,11 +58,11 @@ void GraphTypeManager::renderCurrentType(GraphDisplayArea *display,
         return;
     }
 
-           // 2) Если есть данные — передаём их
+    // 2) Если есть данные — передаём их
     if (rows && !rows->isEmpty()) {
         widget->setData(*rows);
     }
 
-           // 3) Меняем график в области
+    // 3) Меняем график в области
     display->setGraph(std::move(widget));
 }

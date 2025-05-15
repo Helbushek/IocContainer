@@ -6,16 +6,9 @@ CustomPlotGraph::CustomPlotGraph(QWidget *parent) : IGraphWidget(parent)
 {
     plot_ = new QCustomPlot(this);
     plot_->addGraph();
-
+    setAxelsSettings();
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(plot_);
-
-    QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
-    dateTicker->setDateTimeFormat("dd.MM.yyyy HH:mm"); // формат вывода
-    plot_->xAxis->setTicker(dateTicker);
-                                         // Конфигурация осей и зума
-    plot_->xAxis->setLabel("Дата и Время");
-    plot_->yAxis->setLabel("Значение");
 
     enableInteractions(plot_);
 }

@@ -13,10 +13,7 @@ class BarChartGraph : public IGraphWidget {
         : IGraphWidget(parent)
     {
         plot_ = new QCustomPlot(this);
-        // создаём группу осей X (по времени) и Y (значение)
-        plot_->xAxis->setLabel("Дата и время");
-        plot_->yAxis->setLabel("Значение");
-        // контейнер для столбцов
+        setAxelsSettings();
         bars_ = new QCPBars(plot_->xAxis, plot_->yAxis);
         bars_->setWidth(0.8 * 3600); // ширина ~0.8 часа (секунды)
 
@@ -41,6 +38,14 @@ class BarChartGraph : public IGraphWidget {
     }
 
     QCustomPlot* plot() const { return plot_; }
+
+    void applyChartStyle(IChartStyle *style)
+    {
+        setStyle(style);
+        style_->configure(this);
+        update();
+        plot_->replot();
+    }
     QCPBars *bars() const
     {
         return bars_;

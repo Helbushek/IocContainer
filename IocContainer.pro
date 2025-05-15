@@ -19,6 +19,8 @@ SOURCES += \
         src/Chart/CustomGraphs/PieChartGraph.cpp \
         src/Chart/CustomGraphs/ScatterGraph.cpp \
         src/Chart/GraphTypeManager.cpp \
+    src/Chart/IGraphWidget.cpp \
+        src/Chart/Style/ColourChartStyle.cpp \
         src/Chart/Style/StyleManager.cpp \
         src/DataReaders/CsvReader.cpp \
         src/DataReaders/JsonReader.cpp \
@@ -27,11 +29,6 @@ SOURCES += \
         src/MainWindow.cpp \
         src/main.cpp \
         includes/qcustomplot/qcustomplot.cpp \
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
     src/Chart/ChartManager.h \
@@ -59,3 +56,8 @@ HEADERS += \
     src/PrintManager.h \
     src/SqliteReader.h \
     includes/qcustomplot/qcustomplot.h
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

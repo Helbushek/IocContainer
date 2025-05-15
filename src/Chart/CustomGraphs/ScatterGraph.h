@@ -14,7 +14,8 @@ class ScatterGraph : public IGraphWidget {
     {
         plot_ = new QCustomPlot(this);
         plot_->addGraph();
-        // отключаем линии, оставляем только точки
+
+        setAxelsSettings();
         plot_->graph(0)->setLineStyle(QCPGraph::lsNone);
         plot_->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
 
@@ -35,6 +36,14 @@ class ScatterGraph : public IGraphWidget {
         }
         plot_->graph(0)->setData(x, y);
         plot_->rescaleAxes();
+        plot_->replot();
+    }
+
+    void applyChartStyle(IChartStyle *style)
+    {
+        setStyle(style);
+        style_->configure(this);
+        update();
         plot_->replot();
     }
 

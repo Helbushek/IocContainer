@@ -4,19 +4,23 @@
 #include <QPaintEvent>
 #include <QMap>
 #include <QString>
-#include <src/Chart/IGraphWidget.h>
-#include <src/Chart/IGraphFactory.h>
-#include <src/IOC_Container.h>
-#include <src/Chart/GraphFactoryRegistry.h>
+#include "src/Chart/IGraphWidget.h"
+#include "src/Chart/IGraphFactory.h"
+#include "src/Chart/Style/ColourChartStyle.h"
 
-class PieChartGraph : public IGraphWidget {
-    Q_OBJECT
-        public:
-                 explicit PieChartGraph(QWidget *parent = nullptr)
+class PieChartGraph : public IGraphWidget
+{
+    public:
+    PieChartGraph(QWidget *parent = nullptr)
         : IGraphWidget(parent)
-    {}
+    {
+        auto *defaultStyle = new ColourChartStyle;
+        setStyle(defaultStyle);
+        defaultStyle->configure(this);
+    }
 
-    void setData(const QList<QStringList> &data) override {
+    void setData(const QList<QStringList> &data) override
+    {
         pieData.clear();
         for (const auto &row : data) {
             if (row.size() < 2)
@@ -30,7 +34,8 @@ class PieChartGraph : public IGraphWidget {
     }
 
   protected:
-    void paintEvent(QPaintEvent *event) override {
+    void paintEvent(QPaintEvent *event) override
+    {
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
 
@@ -59,6 +64,13 @@ class PieChartGraph : public IGraphWidget {
         }
 
         QWidget::paintEvent(event);
+    }
+
+    void applyChartStyle(IChartStyle* style) override
+    {
+        setStyle(style);
+        style->configure(this);  // пусть стиль что-нибудь настроит у самого виджета
+        update();                // позволит вызвать paintEvent с новым style_->apply()
     }
 
   private:

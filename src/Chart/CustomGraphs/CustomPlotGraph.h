@@ -12,6 +12,14 @@ class CustomPlotGraph : public IGraphWidget {
     CustomPlotGraph(QWidget *parent = nullptr);
 
     void setData(const QList<QStringList> &data) override;
+
+    void applyChartStyle(IChartStyle *style)
+    {
+        setStyle(style);
+        style_->configure(this);
+        update();
+        plot_->replot();
+    }
 };
 
 class CustomGraphWidgetFactory : public IGraphFactory {
