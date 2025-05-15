@@ -1,9 +1,10 @@
+#pragma once
+
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <map>
 #include <string>
-// using namespace std;  !!!! s
 
 class IOCContainer
 {
@@ -111,7 +112,4 @@ public:
 	}
 };
 
-IOCContainer gContainer;
-
-// инициализируем ненулевым числом
-int IOCContainer::s_nextTypeId = 115094801;
+extern IOCContainer gContainer;

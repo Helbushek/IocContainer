@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>print.png</file>
+        <file>batch.png</file>
+        <file>image.png</file>
+        <file>image-jpg.png</file>
+        <file>settings.png</file>
+    </qresource>
+</RCC>

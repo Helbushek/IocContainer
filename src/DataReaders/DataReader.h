@@ -5,5 +5,5 @@
 class DataReader
 {
   public:
-    virtual QList<QStringList *> *read(const QString &dbPath) = 0;
+    virtual QList<QStringList> *read(const QString &dbPath) = 0;
 };
