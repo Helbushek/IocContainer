@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # IoCContainer
 
 ![dLV1Sjis4BtpAtQcCmsbI6hF6bSJsubRTvg94xMJGwVZWSWLYHO2661fHsrpxGVq4_ib1PQKI0fg5Si7cLmi7XPl7nwa5uw4fNgZ4lURr9MmOWEP4ivT4bcvgWblCwENydU4htifIcgaROLWB9KcIPvzyvb_oJDuAKZ0EnGvMWT2v_wva8xizWaeKXFQjSYGqHem-2C107WErh-c-Uf](https://github.com/user-attachments/assets/3d3a9e30-c5b0-4ba1-b03b-dccc0b822be4)
@@ -205,3 +206,82 @@ qmake IocContainer.pro && make
 ## Автор
 
 Горевой Александр, для лабораторной работы №3 по курсу TRPO.
+=======
+# IocContainer
+
+<!-- UML Diagram Placeholder: insert rendered PlantUML here -->
+
+# Project Overview
+
+IocContainer is a simple Qt-based application demonstrating the use of an Inversion of Control (IoC) container for decoupling data loading, graph rendering, styling, and PDF export. It supports multiple data formats (CSV/JSON/SQLite) and graph types (bar, pie, scatter, custom plots) with interchangeable color and grayscale styles.
+
+# Architecture
+
+The application follows a modular, layered architecture:
+
+1. **Data Readers** (DataReader, CsvReader, JsonReader, SqliteReader, DataReaderRegistry):
+ - Implements the Strategy pattern for pluggable data sources.
+ - Registry manages factory functions to instantiate readers based on file extension.
+
+2. **Graph Widgets** (IGraphWidget, concrete graphs, GraphDisplayArea, GraphTypeManager):
+ - Abstract factory for graph creation.
+ - Display area hosts the selected graph widget and delegates rendering.
+
+3. **Chart Styles** (IChartStyle, ColourChartStyle, GrayScaleChartStyle, StyleManager):
+ - Strategy pattern to apply styling (color vs grayscale) at runtime.
+ - Manager listens to UI actions (via Qt signals/slots) to switch styles.
+
+4. **IoC Container** (MyContainer, ServiceInterface, ServiceImplementation):
+ - Simplified generic container for registering and resolving dependencies.
+ - Enables loose coupling and easier testing.
+
+5. **Main Window** (MainWindow):
+ - Orchestrates UI, data loading, graph selection, styling, and PDF export.
+ - Uses Qt’s signal/slot mechanism to wire components without tight coupling.
+
+## UML Diagram
+
+## Architectural Decisions & Patterns
+
+- **Inversion of Control (IoC) Container**: Centralizes dependency management, reduces manual wiring in main.cpp, and improves testability.
+- **Strategy Pattern**: Used for both data readers and chart styles to allow easy extension (e.g., new file format or style).
+- **Abstract Factory**: GraphTypeManagercreates appropriateIGraphWidgetwithout exposing implementation details to the UI.
+- **Singleton/Registry**:DataReaderRegistry` ensures a single point for registering and creating readers by file extension.
+- Qt Signal/Slot: Decouples UI events from business logic, enabling runtime reconfiguration of graph type and style.
+
+## Advantages
+
+- High Extensibility: New readers, graphs, or styles can be added by implementing respective interfaces and registering them.
+- Loose Coupling: Components depend on abstractions, simplifying maintenance and unit testing.
+- Clear Separation of Concerns: Each module focuses on a single responsibility (data, rendering, styling, orchestration).
+
+## Disadvantages
+
+- Initial Complexity: Introducing an IoC container and multiple patterns can be overkill for small labs.
+- Performance Overhead: Factory lookups and dynamic dispatch add negligible but non-zero runtime cost.
+- Learning Curve: Students must understand several design patterns and Qt’s event model.
+
+# Build & Run Instructions
+
+bash
+## Clone
+```
+git clone https://github.com/Helbushek/IocContainer.git
+cd IocContainer
+```
+## Build with qmake
+```
+qmake IocContainer.pro && make
+```
+# Run
+```
+./IocContainer
+```
+## Contributing
+
+Feel free to open issues or pull requests for bug fixes, new readers, graph types, or style extensions.
+
+## Author
+
+Gorevoy Aleksandr, 
+>>>>>>> Stashed changes
